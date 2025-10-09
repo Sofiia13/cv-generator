@@ -30,6 +30,7 @@ export const Input: React.FC<Props> = ({
       {!textarea ? (
         <input
           type={type}
+          required
           name={name}
           className="input__field"
           value={value}
@@ -38,6 +39,7 @@ export const Input: React.FC<Props> = ({
         />
       ) : (
         <textarea
+          required
           name={name}
           className="input__textarea"
           value={value}
