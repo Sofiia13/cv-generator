@@ -1,8 +1,9 @@
 import express from "express";
-import { generateCV } from "../controllers/cvController.js";
+import { generateCV, getCV } from "../controllers/cvController.js";
 
 const router = express.Router();
 
 router.post("/cv", generateCV);
+router.get("/cv:name", getCV);
 
 export default router;

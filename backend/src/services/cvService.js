@@ -1,4 +1,3 @@
-import * as fs from "fs";
 import { Document, Packer, Paragraph, TextRun } from "docx";
 
 export const createDocx = async ({ name, city, skills, experience }) => {
