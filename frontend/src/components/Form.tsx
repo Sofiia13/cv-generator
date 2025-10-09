@@ -8,6 +8,7 @@ type FormData = {
   position: string;
   city: string;
   skills: string;
+  experience: string;
 };
 
 export const Form: React.FC = () => {
@@ -16,6 +17,7 @@ export const Form: React.FC = () => {
     position: "",
     city: "",
     skills: "",
+    experience: "",
   });
   const [responseMessage, setResponseMessage] = useState("");
   const [generatedFileName, setGeneratedFileName] = useState<string>("");
@@ -36,13 +38,16 @@ export const Form: React.FC = () => {
       .post("http://localhost:3001/cv", formData)
       .then((res) => {
         setResponseMessage("Sent data successfully!");
-        console.log(responseMessage);
+
+        console.log("Sent data successfully!");
+
         setGeneratedFileName(res.data.fileName);
         setFormData({
           name: "",
           position: "",
           city: "",
           skills: "",
+          experience: "",
         });
       })
       .catch((err) => {
@@ -50,16 +55,22 @@ export const Form: React.FC = () => {
       });
   };
 
-  const downloadFile = async (fileName: string) => {
+  const downloadFile = async () => {
+    if (!generatedFileName) return alert("First generate the CV!");
+
     try {
-      const response = await axios.get(`http://localhost:3001/cv/${fileName}`, {
-        responseType: "blob",
-      });
+      console.log("📤 Downloading file:", generatedFileName);
+      const response = await axios.get(
+        `http://localhost:3001/cv/${generatedFileName}`,
+        {
+          responseType: "blob",
+        }
+      );
 
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", fileName);
+      link.setAttribute("download", generatedFileName);
       document.body.appendChild(link);
       link.click();
       link.remove();
@@ -100,10 +111,17 @@ export const Form: React.FC = () => {
           value={formData.skills}
           onChange={handleChange}
         />
+        <Input
+          type="text"
+          name="experience"
+          label="Experience"
+          value={formData.experience}
+          onChange={handleChange}
+        />
         <button type="submit">Generate CV</button>
       </form>
 
-      <button onClick={() => downloadFile(generatedFileName)}>Download</button>
+      <button onClick={downloadFile}>Download</button>
     </>
   );
 };

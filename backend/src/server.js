@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
   res.json({ message: "Hello from backend!" });
 });
 
-app.use("/", cvRoutes);
+app.use("/cv", cvRoutes);
 
 app.listen(PORT, () =>
   console.log(`Server running on http://localhost:${PORT}`)

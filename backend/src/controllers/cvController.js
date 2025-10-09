@@ -15,7 +15,8 @@ export const generateCV = async (req, res) => {
   try {
     const createFile = await createDocx({ name, city, skills, experience });
 
-    const fileName = `${name}_CV.docx`;
+    const safeName = name.replace(/\s+/g, "_");
+    const fileName = `${safeName}_CV.docx`;
 
     const filePath = path.join(filesDir, fileName);
 
