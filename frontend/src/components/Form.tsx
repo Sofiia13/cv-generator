@@ -3,6 +3,7 @@ import { Input } from "./Input";
 import { ChangeEvent, useState } from "react";
 import axios from "axios";
 import "../styles/form.scss";
+import { ClipLoader } from "react-spinners";
 
 type FormData = {
   name: string;
@@ -25,6 +26,7 @@ export const Form: React.FC<Props> = ({ onSubmitSuccess }) => {
     experience: "",
   });
   const [responseMessage, setResponseMessage] = useState("");
+  let [loading, setLoading] = useState(false);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -39,6 +41,7 @@ export const Form: React.FC<Props> = ({ onSubmitSuccess }) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
 
     axios
       .post("http://localhost:3001/cv", formData)
@@ -54,6 +57,7 @@ export const Form: React.FC<Props> = ({ onSubmitSuccess }) => {
           skills: "",
           experience: "",
         });
+        setLoading(false);
         onSubmitSuccess(res.data.fileName);
       })
       .catch((err) => {
@@ -107,8 +111,19 @@ export const Form: React.FC<Props> = ({ onSubmitSuccess }) => {
           onChange={handleChange}
         />
 
-        <button type="submit" className="form__button form__generate">
-          Generate CV
+        <button type="submit" className="form__button">
+          {loading ? (
+            <ClipLoader
+              className="clip-loader"
+              color="#dad7d7ff"
+              loading={loading}
+              size={10}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          ) : (
+            "Generate CV"
+          )}
         </button>
       </form>
     </>
