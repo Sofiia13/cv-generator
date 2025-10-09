@@ -1,6 +1,6 @@
 import type React from "react";
 import { Input } from "./Input";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import axios from "axios";
 
 type FormData = {
@@ -22,7 +22,9 @@ export const Form: React.FC = () => {
   const [responseMessage, setResponseMessage] = useState("");
   const [generatedFileName, setGeneratedFileName] = useState<string>("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
 
     setFormData((prev) => ({
@@ -82,12 +84,13 @@ export const Form: React.FC = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="form">
         <Input
           type="text"
           name="name"
           label="Name"
           value={formData.name}
+          placeholder="e.g., Sofiia Stanishevska"
           onChange={handleChange}
         />
         <Input
@@ -95,6 +98,7 @@ export const Form: React.FC = () => {
           name="position"
           label="Position"
           value={formData.position}
+          placeholder="e.g., Frontend Developer"
           onChange={handleChange}
         />
         <Input
@@ -102,6 +106,7 @@ export const Form: React.FC = () => {
           name="city"
           label="City"
           value={formData.city}
+          placeholder="e.g., Lviv"
           onChange={handleChange}
         />
         <Input
@@ -109,6 +114,8 @@ export const Form: React.FC = () => {
           name="skills"
           label="Skills"
           value={formData.skills}
+          placeholder="e.g., React, TypeScript, CSS"
+          textarea
           onChange={handleChange}
         />
         <Input
@@ -116,12 +123,20 @@ export const Form: React.FC = () => {
           name="experience"
           label="Experience"
           value={formData.experience}
+          placeholder="Enter you experiense..."
+          textarea
           onChange={handleChange}
         />
-        <button type="submit">Generate CV</button>
-      </form>
 
-      <button onClick={downloadFile}>Download</button>
+        <div className="form__buttons">
+          <button type="submit" className="form__generate">
+            Generate CV
+          </button>
+          <button onClick={downloadFile} className="form__download">
+            Download
+          </button>
+        </div>
+      </form>
     </>
   );
 };

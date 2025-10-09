@@ -1,11 +1,16 @@
 import type React from "react";
+import "../styles/input.scss";
 
 type Props = {
   type: string;
   name: string;
   label: string;
   value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  placeholder: string;
+  textarea?: boolean;
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
 };
 
 export const Input: React.FC<Props> = ({
@@ -13,6 +18,8 @@ export const Input: React.FC<Props> = ({
   name,
   label,
   value,
+  placeholder,
+  textarea = false,
   onChange,
 }) => {
   return (
@@ -20,13 +27,25 @@ export const Input: React.FC<Props> = ({
       <label htmlFor="" className="input__label">
         {label}
       </label>
-      <input
-        type={type}
-        name={name}
-        className="input__field"
-        value={value}
-        onChange={onChange}
-      />
+      {!textarea ? (
+        <input
+          type={type}
+          name={name}
+          className="input__field"
+          value={value}
+          placeholder={placeholder}
+          onChange={onChange}
+        />
+      ) : (
+        <textarea
+          name={name}
+          className="input__textarea"
+          value={value}
+          placeholder={placeholder}
+          onChange={onChange}
+          rows={4}
+        />
+      )}
     </div>
   );
 };
