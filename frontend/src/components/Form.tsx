@@ -2,6 +2,7 @@ import type React from "react";
 import { Input } from "./Input";
 import { ChangeEvent, useState } from "react";
 import axios from "axios";
+import "../styles/form.scss";
 
 type FormData = {
   name: string;
@@ -129,10 +130,10 @@ export const Form: React.FC = () => {
         />
 
         <div className="form__buttons">
-          <button type="submit" className="form__generate">
+          <button type="submit" className="form__button form__generate">
             Generate CV
           </button>
-          <button onClick={downloadFile} className="form__download">
+          <button onClick={downloadFile} className="form__button form__download">
             Download
           </button>
         </div>
