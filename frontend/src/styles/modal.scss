@@ -1,0 +1,78 @@
+.modal {
+  position: fixed; /* поверх усього */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* напівпрозорий фон */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+
+  &__content {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px 32px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    position: relative;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    animation: fadeInScale 0.3s ease;
+  }
+
+  &__close-button {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #444;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #000;
+    }
+  }
+
+  &__upload-section {
+    h2 {
+      margin-bottom: 10px;
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+
+    p {
+      color: #666;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+    }
+
+    .modal__download-btn {
+      border-radius: 8px;
+      border: 1px solid transparent;
+      padding: 0.6em 1.5em;
+      font-size: 1em;
+      font-weight: 500;
+      font-family: inherit;
+      background-color: #4f46e5;
+      color: #fff;
+      cursor: pointer;
+      transition: border-color 0.25s;
+
+      &:hover {
+        border-color: #4f46e5;
+        background-color: #fff;
+        color: #4f46e5;
+      }
+      &:focus,
+      &:focus-visible {
+        outline: 4px auto -webkit-focus-ring-color;
+      }
+    }
+  }
+}
