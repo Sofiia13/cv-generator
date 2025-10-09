@@ -1,4 +1,5 @@
 import { createDocx } from "../services/cvService.js";
+import { polishCV } from "../services/aiService.js";
 import fs from "fs";
 import path from "path";
 
@@ -6,14 +7,38 @@ const filesDir = path.join(process.cwd(), "generated_files");
 if (!fs.existsSync(filesDir)) fs.mkdirSync(filesDir);
 
 export const generateCV = async (req, res) => {
-  const { name, city, skills, experience } = req.body;
+  const { name, position, city, skills, experience } = req.body;
 
-  if (!name || !city) {
-    return res.status(400).json({ error: "Name and city are required" });
+  if (!name || !position || !city || !skills) {
+    return res
+      .status(400)
+      .json({ error: "Name, position, city and skills are required" });
   }
 
   try {
-    const createFile = await createDocx({ name, city, skills, experience });
+    let polishedData;
+
+    try {
+      polishedData = await polishCV({
+        name,
+        position,
+        city,
+        skills,
+        experience,
+      });
+    } catch (err) {
+      polishedData = { name, position, city, skills, experience };
+    }
+
+    const createFile = await createDocx({
+      name: polishedData.name || name,
+      position: polishedData.position || position,
+      city: polishedData.city || city,
+      skills: Array.isArray(polishedData.skills)
+        ? polishedData.skills.join(", ")
+        : skills,
+      experience: polishedData.experience || experience,
+    });
 
     const safeName = name.replace(/\s+/g, "_");
     const fileName = `${safeName}_CV.docx`;
