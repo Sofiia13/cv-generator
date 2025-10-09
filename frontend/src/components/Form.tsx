@@ -1,6 +1,6 @@
 import type React from "react";
 import { Input } from "./Input";
-import { ChangeEvent, useState } from "react";
+import { useState, type ChangeEvent } from "react";
 import axios from "axios";
 import "../styles/form.scss";
 import { ClipLoader } from "react-spinners";
@@ -25,7 +25,6 @@ export const Form: React.FC<Props> = ({ onSubmitSuccess }) => {
     skills: "",
     experience: "",
   });
-  const [responseMessage, setResponseMessage] = useState("");
   let [loading, setLoading] = useState(false);
 
   const handleChange = (
@@ -46,8 +45,6 @@ export const Form: React.FC<Props> = ({ onSubmitSuccess }) => {
     axios
       .post("https://cv-generator-dgho.onrender.com/cv", formData)
       .then((res) => {
-        setResponseMessage("Sent data successfully!");
-
         console.log("Sent data successfully!");
 
         setFormData({
@@ -61,7 +58,7 @@ export const Form: React.FC<Props> = ({ onSubmitSuccess }) => {
         onSubmitSuccess(res.data.fileName);
       })
       .catch((err) => {
-        setResponseMessage("Error sending data");
+        console.error("Error sending data:", err);
       });
   };
 
