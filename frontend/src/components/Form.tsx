@@ -12,7 +12,11 @@ type FormData = {
   experience: string;
 };
 
-export const Form: React.FC = () => {
+type Props = {
+  onSubmitSuccess: (fileName: string) => void;
+};
+
+export const Form: React.FC<Props> = ({ onSubmitSuccess }) => {
   const [formData, setFormData] = useState<FormData>({
     name: "",
     position: "",
@@ -21,7 +25,6 @@ export const Form: React.FC = () => {
     experience: "",
   });
   const [responseMessage, setResponseMessage] = useState("");
-  const [generatedFileName, setGeneratedFileName] = useState<string>("");
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -44,7 +47,6 @@ export const Form: React.FC = () => {
 
         console.log("Sent data successfully!");
 
-        setGeneratedFileName(res.data.fileName);
         setFormData({
           name: "",
           position: "",
@@ -52,35 +54,11 @@ export const Form: React.FC = () => {
           skills: "",
           experience: "",
         });
+        onSubmitSuccess(res.data.fileName);
       })
       .catch((err) => {
         setResponseMessage("Error sending data");
       });
-  };
-
-  const downloadFile = async () => {
-    if (!generatedFileName) return alert("First generate the CV!");
-
-    try {
-      console.log("📤 Downloading file:", generatedFileName);
-      const response = await axios.get(
-        `http://localhost:3001/cv/${generatedFileName}`,
-        {
-          responseType: "blob",
-        }
-      );
-
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", generatedFileName);
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error("Error downloading file:", error);
-    }
   };
 
   return (
@@ -129,14 +107,9 @@ export const Form: React.FC = () => {
           onChange={handleChange}
         />
 
-        <div className="form__buttons">
-          <button type="submit" className="form__button form__generate">
-            Generate CV
-          </button>
-          <button onClick={downloadFile} className="form__button form__download">
-            Download
-          </button>
-        </div>
+        <button type="submit" className="form__button form__generate">
+          Generate CV
+        </button>
       </form>
     </>
   );
