@@ -22,7 +22,7 @@ function App() {
     try {
       console.log("📤 Downloading file:", generatedFileName);
       const response = await axios.get(
-        `http://localhost:3001/cv/${generatedFileName}`,
+        `https://cv-generator-dgho.onrender.com/cv/${generatedFileName}`,
         {
           responseType: "blob",
         }

@@ -44,7 +44,7 @@ export const Form: React.FC<Props> = ({ onSubmitSuccess }) => {
     setLoading(true);
 
     axios
-      .post("http://localhost:3001/cv", formData)
+      .post("https://cv-generator-dgho.onrender.com/cv", formData)
       .then((res) => {
         setResponseMessage("Sent data successfully!");
 
