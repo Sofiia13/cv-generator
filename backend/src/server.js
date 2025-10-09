@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
+
+import cvRoutes from "./routes/cvRoutes.js";
 
 const PORT = 3001;
 
@@ -11,6 +12,8 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.json({ message: "Hello from backend!" });
 });
+
+app.use("/", cvRoutes);
 
 app.listen(PORT, () =>
   console.log(`Server running on http://localhost:${PORT}`)
