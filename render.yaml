@@ -21,17 +21,17 @@ services:
         value: https://strathub-frontend.onrender.com
 
   # Фронтенд React
-  - type: web
-    name: strathub-frontend
-    runtime: static
-    plan: free 
-    rootDir: frontend
-    buildCommand: npm install && npm run build
-    staticPublishPath: build
-    routes:
-      - type: rewrite
-        source: "/*"
-        destination: "/index.html"
-    envVars:
-      - key: VITE_API_URL
-        value: https://strathub-backend.onrender.com
+  # - type: web
+  #   name: strathub-frontend
+  #   runtime: static
+  #   plan: free 
+  #   rootDir: frontend
+  #   buildCommand: npm install && npm run build
+  #   staticPublishPath: build
+  #   routes:
+  #     - type: rewrite
+  #       source: "/*"
+  #       destination: "/index.html"
+  #   envVars:
+  #     - key: VITE_API_URL
+  #       value: https://strathub-backend.onrender.com
