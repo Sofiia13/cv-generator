@@ -4,7 +4,7 @@ services:
   # Бекенд Node.js
   - type: web
     name: strathub-backend
-    env: node
+    runtime: node
     region: frankfurt
     plan: free
     rootDir: backend
@@ -16,8 +16,6 @@ services:
       - key: PORT
         value: 3000
       - key: DATABASE_URL
-        sync: false
-      - key: JWT_SECRET
         sync: false
       - key: FRONTEND_URL
         value: https://strathub-frontend.onrender.com
