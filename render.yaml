@@ -2,29 +2,29 @@ version: "1"
 
 services:
   # Бекенд Node.js
-  # - type: web
-  #   name: strathub-backend
-  #   runtime: node
-  #   region: frankfurt
-  #   plan: free
-  #   rootDir: backend
-  #   buildCommand: npm install && npx tsc
-  #   startCommand: node dist/app.js
-  #   envVars:
-  #     - key: NODE_ENV
-  #       value: staging
-  #     - key: PORT
-  #       value: 3000
-  #     - key: DATABASE_URL
-  #       sync: false
-  #     - key: FRONTEND_URL
-  #       value: https://strathub-frontend.onrender.com
+  - type: web
+    name: strathub-backend
+    runtime: node
+    region: frankfurt
+    plan: free
+    rootDir: backend
+    buildCommand: npm install && npx tsc
+    startCommand: node dist/app.js
+    envVars:
+      - key: NODE_ENV
+        value: staging
+      - key: PORT
+        value: 3000
+      - key: DATABASE_URL
+        sync: false
+      - key: FRONTEND_URL
+        value: https://strathub-frontend.onrender.com
 
   # Фронтенд React
   - type: web
     name: strathub-frontend
     runtime: static
-    plan: free 
+    # plan: free 
     rootDir: frontend
     buildCommand: npm install && npm run build
     staticPublishPath: build
