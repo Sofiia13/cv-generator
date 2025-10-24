@@ -6,7 +6,7 @@ services:
     name: strathub-backend
     env: node
     region: frankfurt
-    plan: starter 
+    plan: free
     rootDir: backend
     buildCommand: npm install && npx tsc
     startCommand: node dist/app.js
