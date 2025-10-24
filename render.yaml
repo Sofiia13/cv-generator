@@ -1,14 +1,15 @@
 version: "1"
 
 services:
+  # Бекенд Node.js
   - type: web
     name: strathub-backend
-    runtime: node
+    env: node
+    region: frankfurt
+    plan: starter 
     rootDir: backend
     buildCommand: npm install && npx tsc
     startCommand: node dist/app.js
-    region: frankfurt
-    plan: free
     envVars:
       - key: NODE_ENV
         value: staging
@@ -21,13 +22,15 @@ services:
       - key: FRONTEND_URL
         value: https://strathub-frontend.onrender.com
 
-  - type: static
+  # Фронтенд React
+  - type: web
     name: strathub-frontend
     runtime: static
+    region: frankfurt
+    plan: free 
     rootDir: frontend
     buildCommand: npm install && npm run build
-    staticPublishPath: dist
-    plan: free
+    staticPublishPath: build
     routes:
       - type: rewrite
         source: "/*"
